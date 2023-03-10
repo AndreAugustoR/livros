@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.biblioteca.livros.model.Livros;
 import br.com.biblioteca.livros.repo.LivrosRepo;
-
 
 
 @RestController
@@ -49,17 +49,17 @@ public class LivrosController {
 
 	@GetMapping("/livros/busca")
 	public ResponseEntity<ArrayList<Livros>> buscarPorNome(@RequestParam(name = "palavra") String palavra) {
-		ArrayList<Livros> lista = repo.findByTituloContaining(palavra) ;
+		ArrayList<Livros> lista = repo.findByTituloContaining(palavra);
 		if (lista.size() > 0) {
 			return ResponseEntity.ok(lista);
 		}
 		return ResponseEntity.status(404).body(null);
 	}
-	
-	@DeleteMapping("/livros/{codigo}")
+
+	@DeleteMapping("/livros/{id}")
 	public ResponseEntity<?> removerLivro(@PathVariable int id) {
-			repo.deleteById(id);
-			return ResponseEntity.ok(null);
-		}
+		repo.deleteById(id);
+		return ResponseEntity.ok(null);
+	}
 
 }
